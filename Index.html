@@ -1,28 +1,31 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do List</title>
+    <title>To-do list</title>
 </head>
+
+
 <body>
 
-<main>
-    <div>
-        <input id="input" placeholder="Din syssla">
-        <button id="add">Lägg till</button>
-    </div>
+    <div class="container">
+        <div class="section1">
+                <input id="new-task" type="text">
+                <button id=addTask>Lägg till</button>
+                <button id="clear">Återställ</button>
+        </div>
 
-    <div id="toDoContainer">
-        <h2>Att göra</h2>  
-    </div>
+        <div class="section2">
+            <h3>Att göra</h3>
+            <ul id="incomplete-tasks"></ul>
+        </div>
 
-    <div id="doneContainer">
-        <h2>Färdiga</h2>
-    </div>
+        <div class="section3">
+            <h3>Färdiga</h3>
+            <ul id="completed-tasks"></ul>
+        </div>
 
-</main>
+    </div>
     <script src="JS/main.js"></script>
 </body>
 </html>
