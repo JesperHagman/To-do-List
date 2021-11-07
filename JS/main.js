@@ -1,88 +1,88 @@
-let taskInput = document.getElementById("new-task");
-let addButton = document.getElementById("addTask");
-let incompleteTasks = document.getElementById("incomplete-tasks");
-let completedTasks = document.getElementById("completed-tasks");
-let clearButton = document.getElementById("clear");
+let taskInput = document.getElementById("new-task")
+let addButton = document.getElementById("addTask")
+let incompleteTasks = document.getElementById("incomplete-tasks")
+let completedTasks = document.getElementById("completed-tasks")
+let clearButton = document.getElementById("clear")
 
-let createNewTask = function(taskName) {
-    let listItem = document.createElement("li");
-    let checkBox = document.createElement("input");
-    let label = document.createElement("label");
-    let editInput = document.createElement("input");
-    let editButton = document.createElement("button");
-    let deleteButton = document.createElement("button");
 
-    
-    checkBox.type = "checkBox";
-    editInput.type = "text";
-    editButton.innerText = "Ändra";
-    editButton.className = "edit";
-    deleteButton.innerText = "Radera";
-    deleteButton.className = "delete";
-    label.innerText = taskName;
-    listItem.appendChild(checkBox);
-    listItem.appendChild(label);
-    listItem.appendChild(editInput);
-    listItem.appendChild(editButton);
-    listItem.appendChild(deleteButton);
+let createNewTask = function() {
+    let toDo = document.createElement("li")
+    let editInput = document.createElement("input")
+    let doneButton = document.createElement("button")
+    let editButton = document.createElement("button")
+    let deleteButton = document.createElement("button") 
 
-    return listItem;
+    editInput.type = "text"
+    editButton.innerText = "Ändra"
+    editButton.className = "edit"
+    deleteButton.innerText = "Radera"
+    deleteButton.className = "delete"
+    doneButton.innerText = "Färdig"
+    doneButton.className = "done"
+    editInput.value = taskInput.value
+    toDo.appendChild(editInput).disabled = true
+    toDo.appendChild(editButton)
+    toDo.appendChild(doneButton)
+    toDo.appendChild(deleteButton)
+    return toDo;
 }
 let addTask = function() {
-    if (taskInput.value == "") {
-        alert("Task to be added should not be empty!");
-        return;
-    }
-    let listItem = createNewTask(taskInput.value);
-    incompleteTasks.appendChild(listItem);
-    bindTaskEvents(listItem, taskCompleted);
-    taskInput.value = "";
-}
-
-let editTask = function() {
-
-    let listItem = this.parentNode;
-    let editInput = listItem.querySelector("input[type=text]");
-    let label = listItem.querySelector("label");
-    let containsClass = listItem.classList.contains("editMode");
-    if (containsClass) {
-        label.innerText = editInput.value;
+    let message = document.getElementById("error-message")
+    if (taskInput.value === "") {
+        message.innerText = "vänligen fyll i en sysla"
     } else {
-        editInput.value = label.innerText;
+        let toDo = createNewTask(taskInput.value)
+        incompleteTasks.appendChild(toDo)
+        clickEvents(toDo, taskCompleted)
+        taskInput.value = ""
+        message.innerText = ""
     }
-    listItem.classList.toggle("editMode");
+}
+let editTask = function() {
+    let toDo = this.parentNode
+    let editInput = toDo.querySelector("input[type=text]")
+    let message = document.getElementById("error-message")
+    if (editInput.value === "") {
+        message.innerText = "vänligen fyll i en sysla"
+        taskInput.disabled = true
+    }else {
+        editInput.toggleAttribute("disabled")
+        message.innerText = ""
+        taskInput.disabled = false
+
+        
+    }
 }
 let deleteTask = function() {
-    let listItem = this.parentNode;
-    let ul = listItem.parentNode;
-    ul.removeChild(listItem);
+    let toDo = this.parentNode
+    let ul = toDo.parentNode
+    ul.removeChild(toDo)
 }
 let taskCompleted = function() {
-    let listItem = this.parentNode;
-    completedTasks.appendChild(listItem);
-    bindTaskEvents(listItem, taskIncomplete);
+    let toDo = this.parentNode
+    completedTasks.appendChild(toDo)
+    clickEvents(toDo, taskIncomplete)
+    let doneButtonDelete = document.querySelector("button.done")
+    this.remove(doneButtonDelete)
 }
-
-
 let taskIncomplete = function() {
-    let listItem = this.parentNode;
-    incompleteTasks.appendChild(listItem);
-    bindTaskEvents(listItem, taskCompleted);
+    let toDo = this.parentNode;
+    incompleteTasks.appendChild(toDo);
+    clickEvents(toDo, taskCompleted);
 }
-
-let bindTaskEvents = function(taskListItem, checkBoxEventHandler) {
-    let checkBox = taskListItem.querySelector('input[type="checkbox"]');
-    let editButton = taskListItem.querySelector("button.edit");
-    let deleteButton = taskListItem.querySelector("button.delete");
-    editButton.onclick = editTask;
-    deleteButton.onclick = deleteTask;
-    checkBox.onchange = checkBoxEventHandler;
+let clickEvents = function(taskListItem) {
+    let doneButton = taskListItem.querySelector("button.done")
+    let editButton = taskListItem.querySelector("button.edit")
+    let deleteButton = taskListItem.querySelector("button.delete")
+    editButton.addEventListener("click", editTask)
+    deleteButton.addEventListener("click", deleteTask)
+    doneButton.addEventListener("click", taskCompleted)
 }
-
 let clear = function() {
-    incompleteTasks.innerHTML = "";
-    completedTasks.innerHTML = "";
+    incompleteTasks.innerHTML = ""
+    completedTasks.innerHTML = ""
 }
 
-addButton.addEventListener("click", addTask);
-clearButton.addEventListener('click', clear);
+clearButton.addEventListener('click', clear)
+addButton.addEventListener("click", addTask)
+
