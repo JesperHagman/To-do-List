@@ -49,8 +49,6 @@ let editTask = function() {
         editInput.toggleAttribute("disabled")
         message.innerText = ""
         taskInput.disabled = false
-
-        
     }
 }
 let deleteTask = function() {
@@ -61,15 +59,10 @@ let deleteTask = function() {
 let taskCompleted = function() {
     let toDo = this.parentNode
     completedTasks.appendChild(toDo)
-    clickEvents(toDo, taskIncomplete)
     let doneButtonDelete = document.querySelector("button.done")
     this.remove(doneButtonDelete)
 }
-let taskIncomplete = function() {
-    let toDo = this.parentNode;
-    incompleteTasks.appendChild(toDo);
-    clickEvents(toDo, taskCompleted);
-}
+
 let clickEvents = function(taskListItem) {
     let doneButton = taskListItem.querySelector("button.done")
     let editButton = taskListItem.querySelector("button.edit")
