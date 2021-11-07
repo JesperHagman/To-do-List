@@ -62,7 +62,6 @@ let taskCompleted = function() {
     let doneButtonDelete = document.querySelector("button.done")
     this.remove(doneButtonDelete)
 }
-
 let clickEvents = function(taskListItem) {
     let doneButton = taskListItem.querySelector("button.done")
     let editButton = taskListItem.querySelector("button.edit")
@@ -75,7 +74,7 @@ let clear = function() {
     incompleteTasks.innerHTML = ""
     completedTasks.innerHTML = ""
 }
-
 clearButton.addEventListener('click', clear)
 addButton.addEventListener("click", addTask)
+
 
