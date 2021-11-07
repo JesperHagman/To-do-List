@@ -4,7 +4,6 @@ let incompleteTasks = document.getElementById("incomplete-tasks")
 let completedTasks = document.getElementById("completed-tasks")
 let clearButton = document.getElementById("clear")
 
-
 let createNewTask = function() {
     let toDo = document.createElement("li")
     let editInput = document.createElement("input")
