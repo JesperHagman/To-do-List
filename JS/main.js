@@ -47,7 +47,6 @@ let editTask = function() {
     }else {
         editInput.toggleAttribute("disabled")
         message.innerText = ""
-        taskInput.disabled = false
     }
 }
 let deleteTask = function() {
