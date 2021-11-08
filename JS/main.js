@@ -32,41 +32,18 @@ let addTask = function() {
     } else {
         let toDo = createNewTask(taskInput.value)
         incompleteTasks.appendChild(toDo)
-        clickEvents(toDo, taskCompleted)
+        clickEvents(toDo, done.taskCompleted)
         taskInput.value = ""
         message.innerText = ""
     }
-}
-let editTask = function() {
-    let toDo = this.parentNode
-    let editInput = toDo.querySelector("input[type=text]")
-    let message = document.getElementById("error-message")
-    if (editInput.value === "") {
-        message.innerText = "vänligen fyll i en sysla"
-        taskInput.disabled = true
-    }else {
-        editInput.toggleAttribute("disabled")
-        message.innerText = ""
-    }
-}
-let deleteTask = function() {
-    let toDo = this.parentNode
-    let ul = toDo.parentNode
-    ul.removeChild(toDo)
-}
-let taskCompleted = function() {
-    let toDo = this.parentNode
-    completedTasks.appendChild(toDo)
-    let doneButtonDelete = document.querySelector("button.done")
-    this.remove(doneButtonDelete)
 }
 let clickEvents = function(taskListItem) {
     let doneButton = taskListItem.querySelector("button.done")
     let editButton = taskListItem.querySelector("button.edit")
     let deleteButton = taskListItem.querySelector("button.delete")
-    editButton.addEventListener("click", editTask)
-    deleteButton.addEventListener("click", deleteTask)
-    doneButton.addEventListener("click", taskCompleted)
+    editButton.addEventListener("click", edit.editTask)
+    deleteButton.addEventListener("click", remove.deleteTask)
+    doneButton.addEventListener("click", done.taskCompleted)
 }
 let clear = function() {
     incompleteTasks.innerHTML = ""
@@ -75,4 +52,34 @@ let clear = function() {
 clearButton.addEventListener('click', clear)
 addButton.addEventListener("click", addTask)
 
+let done = {
+    taskCompleted: function() {
+        let toDo = this.parentNode
+        completedTasks.appendChild(toDo)
+        let doneButtonDelete = document.querySelector("button.done")
+        this.remove(doneButtonDelete)
+    }
 
+}
+let remove = {
+    deleteTask: function() {
+        let toDo = this.parentNode
+        let ul = toDo.parentNode
+        ul.removeChild(toDo)
+    }
+}
+let edit = {
+    editTask: function() {
+        let toDo = this.parentNode
+        let editInput = toDo.querySelector("input[type=text]")
+        let message = document.getElementById("error-message")
+        if (editInput.value === "") {
+            message.innerText = "vänligen fyll i en sysla"
+            taskInput.disabled = true
+        }else {
+            editInput.toggleAttribute("disabled")
+            message.innerText = ""
+            taskInput.disabled = false
+        }
+    }
+}
