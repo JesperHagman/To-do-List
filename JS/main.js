@@ -32,7 +32,7 @@ let addTask = function() {
     } else {
         let toDo = createNewTask(taskInput.value)
         incompleteTasks.appendChild(toDo)
-        clickEvents(toDo, done.taskCompleted)
+        clickEvents(toDo, clickEvent.taskCompleted)
         taskInput.value = ""
         message.innerText = ""
     }
@@ -41,9 +41,9 @@ let clickEvents = function(taskListItem) {
     let doneButton = taskListItem.querySelector("button.done")
     let editButton = taskListItem.querySelector("button.edit")
     let deleteButton = taskListItem.querySelector("button.delete")
-    editButton.addEventListener("click", edit.editTask)
-    deleteButton.addEventListener("click", remove.deleteTask)
-    doneButton.addEventListener("click", done.taskCompleted)
+    editButton.addEventListener("click", clickEvent.editTask)
+    deleteButton.addEventListener("click", clickEvent.deleteTask)
+    doneButton.addEventListener("click", clickEvent.taskCompleted)
 }
 let clear = function() {
     incompleteTasks.innerHTML = ""
@@ -52,23 +52,18 @@ let clear = function() {
 clearButton.addEventListener('click', clear)
 addButton.addEventListener("click", addTask)
 
-let done = {
+let clickEvent = {
     taskCompleted: function() {
         let toDo = this.parentNode
         completedTasks.appendChild(toDo)
         let doneButtonDelete = document.querySelector("button.done")
         this.remove(doneButtonDelete)
-    }
-
-}
-let remove = {
+    },
     deleteTask: function() {
         let toDo = this.parentNode
         let ul = toDo.parentNode
         ul.removeChild(toDo)
-    }
-}
-let edit = {
+    },
     editTask: function() {
         let toDo = this.parentNode
         let editInput = toDo.querySelector("input[type=text]")
