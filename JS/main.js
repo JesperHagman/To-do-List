@@ -11,7 +11,7 @@ let createNewTask = function() {
     let editButton = document.createElement("button")
     let deleteButton = document.createElement("button") 
 
-    editInput.type = "text"
+    editInput.className = "input"
     editButton.innerText = "Ändra"
     editButton.className = "edit"
     deleteButton.innerText = "Radera"
@@ -32,7 +32,7 @@ let addTask = function() {
     } else {
         let toDo = createNewTask(taskInput.value)
         incompleteTasks.appendChild(toDo)
-        clickEvents(toDo, clickEvent.taskCompleted)
+        clickEvents(toDo)
         taskInput.value = ""
         message.innerText = ""
     }
@@ -41,18 +41,18 @@ let clickEvents = function(taskListItem) {
     let doneButton = taskListItem.querySelector("button.done")
     let editButton = taskListItem.querySelector("button.edit")
     let deleteButton = taskListItem.querySelector("button.delete")
-    editButton.addEventListener("click", clickEvent.editTask)
-    deleteButton.addEventListener("click", clickEvent.deleteTask)
-    doneButton.addEventListener("click", clickEvent.taskCompleted)
+    editButton.addEventListener("click", clickFunction.editTask)
+    deleteButton.addEventListener("click", clickFunction.deleteTask)
+    doneButton.addEventListener("click", clickFunction.taskCompleted)
 }
-let clear = function() {
+let clear = function() { 
     incompleteTasks.innerHTML = ""
     completedTasks.innerHTML = ""
 }
 clearButton.addEventListener('click', clear)
 addButton.addEventListener("click", addTask)
 
-let clickEvent = {
+let clickFunction = {
     taskCompleted: function() {
         let toDo = this.parentNode
         completedTasks.appendChild(toDo)
@@ -66,8 +66,9 @@ let clickEvent = {
     },
     editTask: function() {
         let toDo = this.parentNode
-        let editInput = toDo.querySelector("input[type=text]")
+        let editInput = toDo.querySelector(".input")
         let message = document.getElementById("error-message")
+
         if (editInput.value === "") {
             message.innerText = "vänligen fyll i en sysla"
             taskInput.disabled = true
