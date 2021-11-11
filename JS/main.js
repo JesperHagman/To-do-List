@@ -37,10 +37,10 @@ let addTask = function() {
         message.innerText = ""
     }
 }
-let clickEvents = function(taskListItem) {
-    let doneButton = taskListItem.querySelector("button.done")
-    let editButton = taskListItem.querySelector("button.edit")
-    let deleteButton = taskListItem.querySelector("button.delete")
+let clickEvents = function(toDoItem) {
+    let doneButton = toDoItem.querySelector("button.done")
+    let editButton = toDoItem.querySelector("button.edit")
+    let deleteButton = toDoItem.querySelector("button.delete")
     editButton.addEventListener("click", clickFunction.editTask)
     deleteButton.addEventListener("click", clickFunction.deleteTask)
     doneButton.addEventListener("click", clickFunction.taskCompleted)
